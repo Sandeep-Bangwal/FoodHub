@@ -1,0 +1,48 @@
+{% extends "base/base.html" %}
+
+{% block title %}Restaurant{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="/static/CSS/restaurant.css">
+{% endblock css%}
+
+{% block body %}
+
+<div class="container-fluid img">
+    <div class="conatainer d-flex justify-content-center align-items-center p-4">
+        <h1 class="text-white" style="margin-right: 200px;">FoodHub</h1>
+        {% if user.is_authenticated %}
+        <p class="text-white" >Hi, {{user.full_name}}</p>
+        {% else %}
+        <a href="{% url 'login' %}" class="me-2"><button type="button" class="btn btn-outline-light">Login</button></a>
+        <a href="{% url 'restaurant_signup' %}"><button type="button" class="btn btn-dark">Create Account</button></a>
+        {% endif %}
+    </div>
+
+    <div class="container msg text-white">
+            <h1>Register your restaurant on </h1>
+            <h3>and get more customers!</h3>
+        <div class="container d-flex justify-content-center">
+                <a href="{% url 'registration' %}" class="me-2"><button type="button" class="btn btn-dark btn-lg" >Register your restaurant</button></a>
+                <a href="{% url 'deshboard' %}"><button type="button" class="btn btn-light btn-lg">Restaurant already listed? login now</button></a>
+        </div>
+    </div>
+
+    <div class="container card mt-4 p-4" style="width: 800px;">
+       <h2 class="text-center">Get started with online ordering</h2>
+       <p class="text-center">Please keep the fill your details for a smooth signup</p>
+       <div class="container row row-cols-2">
+        <h6 class="cols"><i class="fa-sharp fa-solid fa-circle-check"></i> Your restaurant menu</h6>
+        <h6 class="cols"><i class="fa-sharp fa-solid fa-circle-check"></i> Your restaurant location</h6>
+        <h6 class="cols"><i class="fa-sharp fa-solid fa-circle-check"></i> Dish images for top 5 items</h6> 
+        <h6 class="cols"><i class="fa-sharp fa-solid fa-circle-check"></i> Fill your restaurant details</h6>
+        <h6 class="cols"><i class="fa-sharp fa-solid fa-circle-check"></i> Your restaurant name</h6>
+        <h6 class="cols"><i class="fa-sharp fa-solid fa-circle-check"></i> Bank account details </h6>
+       </div>
+    </div>
+</div>
+<div class="bg">
+
+</div>
+
+{% endblock body%}

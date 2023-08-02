@@ -1,0 +1,71 @@
+{% extends "base/base.html" %}
+
+{% block title %}City{% endblock %}
+
+
+{% block css %} 
+<link rel="stylesheet" href="/static/CSS/view.css">
+{% endblock css%}
+
+{% block body %}
+
+{% include "base/nav.html" %}
+
+<div class="container mt-4">
+    <h2>{{view_rest.rest_name|upper}}</h2>
+    <p class="text-muted">
+        {% for food in food_types %}
+        {{food}}
+        {% endfor %}
+    </p>
+    <div class="times">
+        
+            {% if remaining_time == "closed" %}
+            <p class="badge bg-danger">{{remaining_time}}</p>
+            {% else %}
+            <p class="badge bg-success">Open</p>
+            <p class="text-muted">{{remaining_time}}</p>
+            {% endif %}
+        
+    </div>
+    
+
+    <hr>
+     <div class="times d-flex justify-content-start">
+        <h5>30Minus</h5>
+        <h5>₹300 for two</h5>
+     </div>
+
+    <div class="coupon">
+        <h6 class="mt-2">Available offers</h6>
+        {% for coupons in coupon %}
+        <p style="margin-left: 10px;"><img src="/static/images/offers-tag.webp" alt="" srcset="" style="height: 20px; width: 20px;" class="me-1" >
+             Get <b>100₹</b> off mininum order is 499 apply coupon code {{coupons.coupon_code}}
+            </p>
+        {% endfor %}
+    </div>
+
+    <div class="menus mt-5">
+        <hr>
+     {% for menu in menus %}
+   
+     <div class="container d-flex justify-content-between align-item-center">
+        <div>
+            <h5>{{menu.food_name}}</h5>
+            <p>₹{{ menu.price}}</p>
+            <p class="text-muted">{{menu.description}}</p>
+        </div>
+        <div class="imgs">
+            <img src="/media/{{menu.img}}" alt="..." width="100px" height="100px">
+            <div class="center">
+               <a href="{% url 'add_to_card' menu.id %}"><button type="button" class="btn btn-dark shadow-sm  rounded">ADD</button></a>             
+            </div>
+        </div>
+     </div>
+      <hr>
+     {% endfor %}
+    </div>
+
+</div>
+
+{% endblock body%}

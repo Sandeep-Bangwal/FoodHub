@@ -1,0 +1,53 @@
+{% extends "base/base.html" %}
+
+{% block title %}City{% endblock %}
+
+{% block css %} 
+
+{% endblock css%}
+
+{% block body %}
+
+{% include "base/nav.html" %}
+
+<section class="h-100 gradient-custom">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-10 col-xl-8">
+        <!-- <div class="card" style="border-radius: 10px;"> -->
+         
+            <div class="card shadow-0 border mb-4">
+              {% for order in orders %}
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-2">
+                    <img src="/media/{{order.cart__cartItems__food__img}}"
+                      class="img-fluid" alt="Phone">
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0">{{order.cart__cartItems__food__food_name}}</p>
+                  </div>  
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0 small">Qty: 1</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0 small">₹ {{order.total_amounts}}</p>
+                  </div>
+                  <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                    <p class="text-muted mb-0 small">Order ID: {{order.razorpay_order_id}}</p>
+                  </div>
+                </div>
+                <hr class="mb-4" style="background-color: #e0e0e0; opacity: 1;">
+                <div class="row d-flex align-items-center">
+                  <div class="col-md-2">
+                     <a href="{% url 'Ordertrack' order.uid %}" class="text-muted mb-0 small" >Track Order</a>
+                  </div>
+                </div>
+              </div>
+              <hr>
+              {% endfor %}
+            </div>
+</section>
+
+
+{% endblock body%}

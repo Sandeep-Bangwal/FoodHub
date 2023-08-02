@@ -1,0 +1,25 @@
+.img{
+    background-image: url('/static/images/bg1.webp');
+    background-size: 100% 500px;
+    background-repeat: no-repeat;
+    width: auto;
+    height: 70vh;
+}
+
+.msg{
+    margin-top: 100px;
+    text-align: center;
+}
+
+.bg{
+    background-color: whitesmoke;
+    height: 40vh;
+}
+
+.cols{
+      margin-top: 15px;
+}
+
+.cols i{
+    color: green;
+}

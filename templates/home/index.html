@@ -1,0 +1,45 @@
+{% extends "base/base.html" %}
+
+{% block title %}Home {% endblock %}
+
+{% block css %} 
+<link rel="stylesheet" href="/static/CSS/front_page.css">
+{% endblock css%}
+
+{% block body %}
+
+<div class="container-fluid width=100%">
+    <div class="row">
+      <div class="col-7 mt-5">
+        <div class="level-1 d-flex justify-content-end  align-items-center">
+            <h1 class="me-auto text-muted">FoodHub</h1>
+            {% if user.is_authenticated %}
+              <p class="text-muted" >Hi, {{user.full_name}}</p>
+            {% else %}
+            <a href="{% url 'add_restaurant' %}"><button type="button" class="btn">Add restaurant</button></a>
+            <a href="{% url 'login' %}"><button type="button" class="btn">Login</button></a>
+            <a href="/accounts/signup"><button type="button" class="btn btn-dark">Signup</button></a> 
+            {% endif %}
+        </div>
+        <div class="container mt-5">
+            <h2>Unexpected guests?</h2>
+            <h4 class="text-muted">Order food from favourite restaurants near you.</h4>
+        </div>
+        <div class="container mt-5">
+            <form action="searchcity" method="POST">
+             {% csrf_token %}
+                <div class="input-group">
+                    <input type="text" class="form-control form-control-lg" name="search" placeholder="Enter your delivery location">
+                    <button class="btn btn-outline-secondary" type="submit">FIND FOOD</button>
+                  </div>
+            </form>
+        </div>
+      </div>
+      <div class="col-5">
+        <img src="/static/images/bg.jpeg" alt="" height="600px;" width="100%" srcset="">
+      </div>
+    </div>
+  </div>
+ 
+
+{% endblock body%}

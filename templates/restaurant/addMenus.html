@@ -1,0 +1,71 @@
+{% extends "base/base.html" %}
+
+{% block title %}Deshboard{% endblock %}
+
+{% block css %}
+{% endblock css%}
+
+{% block body %}
+
+{% include "base/nav.html" %}
+
+<div class="container border p-2 mt-3" style="width: 800px;">
+    <h2>Add menus</h2>
+    <hr>
+    <form class="mt-2" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+        <div class="col">
+            <input type="text" class="form-control" name="name" placeholder="Food name">
+        </div>
+        <div class="col">
+            <select state="State" name="categories" class="form-select" placeholder="categories" >
+                <option>categories</option>
+                <option value="fast food">fast food</option>
+                <option value="Cake">Cake</option>
+            </select>
+        </div>
+    </div>
+        <div class="row mt-2">
+            <div class="col">
+                <input type="file" class="form-control" name="img"
+                    placeholder="Food Categries">
+            </div>
+            <div class="col">
+              <div class="input-group">
+                <input type="text" class="form-control" name="price">
+                <span class="input-group-text">₹</span>
+            </div>
+            </div>
+        </div>
+        <div class="mb-3 mt-2">
+            <textarea class="form-control" name="desc" rows="4" placeholder="Write something"></textarea>
+        </div>
+        <div class="d-grid gap-2">
+            <button class="btn btn-dark" type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+
+
+<div class="container my-3">
+
+    <div class="row align-items-start">
+        {% for menu in dis %}
+            <div class="col-md-4 ">
+                    <div class="card" style="width: 18rem;">
+                        <img src="/media/{{menu.img}}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">{{menu.food_name }}</h5>
+                            <p class="card-text">{{menu.price}}</p>
+                            <!-- <p class="card-text">{{menu.description  }}</p> -->
+                            <a href="" class="btn btn-danger">Delete</a>
+                        </div>
+                        </div>
+            </div>
+                {% endfor %}
+            </div>
+
+         
+
+{% endblock body%}

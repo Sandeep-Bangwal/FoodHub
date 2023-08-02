@@ -1,0 +1,69 @@
+{% extends "base/base.html" %}
+
+{% block title %}Deshboard{% endblock %}
+
+{% block css %}
+{% endblock css%}
+
+{% block body %}
+
+{% include "base/nav.html" %}
+
+<div class="container mt-3">
+  <h1 class="text-muted">Deshboard</h1>
+</div>
+
+<div class="container card p-2 mt-3">
+<div class="container d-flex align-items-center text-center">
+    <div class="container">
+      <h4 class="text-muted">Total Orders</h4>
+      <h2 class="text-center">{{TotalOrders}}</h2>
+      
+    </div>
+    <div class="container">
+      <h4 class="text-muted">Fulfilled Orders</h4>
+      <h2 class="text-center">{{TotalOrdersFulfilled}}</h2>
+    </div>
+    <div class="container">
+      <h4 class="text-muted">Pending Orders</h4>
+      <h2 class="text-center">{{PendingOrders}}</h2>
+    </div>
+   
+</div>
+</div>
+   
+<h2 class="container mt-3"> Order Lists</h2>
+<table class="table container mt-3">
+  <thead>
+    <tr class="text-center">
+      <th scope="col">Order</th>
+      <th scope="col">Menu</th>
+      <th scope="col">Bill Total</th>
+      <th scope="col">Status</th>
+    </tr>
+  </thead>
+  <tbody>
+      {% for orders in order_recevie %}
+    <tr class="text-center">
+      <th scope="row">#{{orders.uid}}</th>
+      <td>{{orders.cart__cartItems__food__food_name}}</td>
+      <td>{{orders.total_amounts}}</td>
+      <td>
+        {% if orders.status == 'Order Recieved' %}
+        <span class="badge text-bg-primary">New Order</span>  
+        {% elif orders.status == 'Baking' %}
+        <span class="badge text-bg-info">{{orders.status}}</span>  
+        {% elif orders.status == 'Baked' %}
+        <span class="badge text-bg-warning">{{orders.status}}</span>  
+        {% elif orders.status == 'Out for delivery' %}
+        <span class="badge text-bg-danger">{{orders.status}}</span>
+        {% else  %}
+        <span class="badge text-bg-success">{{orders.status}}</span>  
+        {% endif %}
+      </td>
+     {% endfor %}
+  </tr>
+  </tbody>
+</table>
+
+{% endblock body%}

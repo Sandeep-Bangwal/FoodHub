@@ -1,0 +1,70 @@
+{% extends "base/base.html" %}
+
+{% block title %}Deshboard{% endblock %}
+
+{% block css %}
+{% endblock css%}
+
+{% block body %}
+
+{% include "base/nav.html" %}
+
+<table class="table container mt-4 text-center" style="width: 950px;">
+    <thead>
+      <tr>
+        <th scope="col">Sno</th>
+        <th scope="col">Food images</th>
+        <th scope="col">Food_name</th>
+        <th scope="col">Quntity</th>
+        <th scope="col">Price</th>
+        <th scope="col">Status</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for orders in order_recevie %}
+      <tr class="text-center">
+        <th scope="row">{{forloop.counter}}</th>
+       
+        <td>
+          <img src="/media/{{orders.cart__cartItems__food__img}}" alt="" width="40px" height="40px" srcset="">
+        </td>
+
+        <td>{{orders.cart__cartItems__food__food_name}}</td>
+       
+        <td>1</td>
+        <td>{{orders.total_amounts}}</td>
+        <td>
+          {% if orders.status == 'Order Recieved' %}
+          <span class="badge text-bg-primary">{{orders.status}}</span>  
+          {% elif orders.status == 'Baking' %}
+          <span class="badge text-bg-info">{{orders.status}}</span>  
+          {% elif orders.status == 'Baked' %}
+          <span class="badge text-bg-warning">{{orders.status}}</span>  
+          {% elif orders.status == 'Out for delivery' %}
+          <span class="badge text-bg-danger">{{orders.status}}</span>
+          {% else  %}
+          <span class="badge text-bg-success">{{orders.status}}</span>  
+          {% endif %}
+        </td>
+        <td>
+          
+          <form action="{% url 'update_status' orders.uid %}" method="post" class=" d-flex justify-content-sm-evenly align-item-center">
+            {% csrf_token %}
+            <select name="status" style="height: 35px;">
+              <option value="Baking">Baking </option>
+              <option value="Baked">Baked</option>
+              <option value="Out for delivery"> Out for delivery</option>
+              <option value="delivered">delivered</option>
+            </select>
+            <br>
+            <a href="{% url 'update_status' orders.uid  %}" style="height: 50px;"><input type="submit" class="btn btn-dark"></a>
+          </form>
+        </td>
+     
+       {% endfor %}
+    </tr>
+    </tbody>
+  </table>
+
+{% endblock body%}

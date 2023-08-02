@@ -1,0 +1,49 @@
+.sort{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    
+}
+
+.count{
+    margin-right: auto;
+    font-weight: 600;
+    font-size: 28px;
+}
+
+form ul li{
+    display: inline-block;
+}
+
+.navbar form ul li{
+    list-style: none;
+    cursor: pointer;
+}
+
+.sort form ul li button{
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 300;
+    margin-top: 10px;
+    text-transform: capitalize;
+    color: #686b78;
+    margin-left: 35px;
+    cursor: pointer;
+    position: relative; 
+}
+
+.sort form ul li button:hover{
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.custom-button{
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+
+

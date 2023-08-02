@@ -1,0 +1,40 @@
+{% extends "base/base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block css %} 
+<style>
+   hr{
+      border: 1px solid black;
+      width: 28px;
+   }
+</style>
+{% endblock css%}
+
+{% block body %}
+
+<div class="container card mt-4 p-2 " style="width: 500px;">
+    <div class="d-flex justify-content-between">
+     <div>
+        <h2>Log in</h2>
+        <p>or <a href="/accounts/signup" class="text-muted" style="text-decoration: none;">Create a account</a></p>
+        <hr>
+    </div>
+   <div>
+    <img src="/static/images/bg-3.jpg" class="rounded-circle" alt="Cinque Terre" width="90px" height="86px"> 
+   </div>
+</div>
+<form method="post">
+    {% csrf_token %}
+    {% include "base/alert.html" %} 
+    <div class="mb-3 mt-2">
+        <input type="email" class="form-control form-control-lg" name="email" placeholder="Email">
+    </div>
+    <div class="d-grid gap-2">
+    <button class="btn btn-dark" type="submit">CONTINUE</button>
+    </div>
+    <span class="text-muted">By creating an account, I accept the Terms & Conditions</span>
+</form>
+</div>
+
+{% endblock body%}

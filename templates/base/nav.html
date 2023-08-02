@@ -1,0 +1,83 @@
+<style>
+.c{
+  height: 20px;
+}
+</style>
+
+
+<nav class="navbar navbar-expand-lg navbar navbar-dark bg-dark">
+    <div class="container-fluid justify-content-center align-item-center">
+      {% if user.is_authenticated and user.user_type == 'customer' %}
+      <a class="navbar-brand" href="/">FoodHub</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="nav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" >
+          <div class="method input-group c" style="height: 10px; width: 340px;">
+            <input type="text" class="form-control" placeholder="Search" name="Coupon_code">
+            <div class="input-group-append">
+              <button class="btn btn-secondary" type="submit"> <i class="fa-sharp fa-solid fa-magnifying-glass ml-5" style="color: white;"></i></button>
+            </div>
+          </div>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'cart' %}"><i class="fa-solid fa-cart-shopping"></i><span class="badge text-bg-danger" id ="count">{{request.session.cart_counts}}</span></a>
+            </li>
+            <li class="nav-item dropdown me-2">
+                <a class="nav-link" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><i class="fa-regular fa-user"></i></a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'view_orders' %}">Orders</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{% url 'logout'%}">Log out</a></li>
+                </ul>
+              </li>
+          </ul>
+      </div>
+
+      {% elif user.is_authenticated and  user.user_type == 'restaurant' %}
+      <a class="navbar-brand font-size:10px;" href="{% url 'deshboard' %}" >Seller</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="nav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" >
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'CreateMenus' %}">Menus</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'OdersReceived' %}">Orders</a>
+            </li>
+            <li class="nav-item dropdown me-2">
+                <a class="nav-link" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false"><i class="fa-solid fa-user"></i></a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="{% url 'OdersReceived' %}">Orders</a></li>
+                  <li><a class="dropdown-item" href="{% url 'CreateMenus' %} ">Menus</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{% url 'logout'%}">Log out</a></li>
+                </ul>
+              </li>
+          </ul>
+      </div>
+      {%else %}
+
+      <a class="navbar-brand" href="#">Food Order</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="nav">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" >
+          <div class="method input-group c" style="height: 10px; width: 340px;">
+            <input type="text" class="form-control" placeholder="Search" name="Coupon_code">
+            <div class="input-group-append">
+              <button class="btn btn-secondary" type="submit"> <i class="fa-sharp fa-solid fa-magnifying-glass ml-5" style="color: white;"></i></button>
+            </div>
+          </div>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'cart' %}"><i class="fa-solid fa-cart-shopping"></i><span class="badge text-bg-danger" id ="count">{{request.session.cart_counts}}</span></a>
+            </li>
+           
+          </ul>
+      </div>
+      {% endif %}
+    </div>
+  </nav>

@@ -1,0 +1,70 @@
+{% extends "base/base.html" %}
+
+{% block title %}OTP{% endblock %}
+
+{% block css %} 
+<style>
+   hr{
+      border: 1px solid black;
+      width: 28px;
+   }
+
+   #Timer{
+       color: green;
+       font-size: large;
+   }
+</style>
+{% endblock css%}
+
+{% block body %}
+
+<div class="container card mt-4 p-2 " style="width: 500px;">
+    <div class="d-flex justify-content-between">
+     <div>
+        <h2>Enter OTP</h2>
+        <p class="text-muted">
+            We've sent an OTP to your <br> email address
+        </p>
+        <hr>
+    </div>
+   <div>
+    <img src="/static/images/bg-3.jpg" class="rounded-circle" alt="Cinque Terre" width="90px" height="86px"> 
+   </div>
+</div>
+<form action="" method="post">
+  {% csrf_token %}
+  {% include "base/alert.html" %} 
+    <div class="mb-3 mt-2">
+      <input type="email" class="form-control form-control-lg" name="email" placeholder="Email" value=" {{request.session.email}}">
+    </div>
+    <div class="mb-3 mt-2">
+      <input type="text" class="form-control form-control-lg" name="otp" placeholder="One time password">
+    </div>
+    <div class="d-flex justify-content-between">
+    <div id="Timer"></div>
+    <a href="{% url 'resent_otp' %}" class="text-muted">Resent OTP</a>
+  </div>
+    <div class="d-grid gap-2 mt-2">
+    <button class="btn btn-dark" type="submit">VERIFY OTP</button>
+  </div>
+  </form>
+ 
+</div>
+
+<script>
+  var timeLeft = 60;
+var elem = document.getElementById('Timer');
+
+var timerId = setInterval(countdown, 1000);
+
+function countdown() {
+  if (timeLeft < 0) {
+    clearTimeout(timerId);
+    doSomething();
+  } else {
+    elem.innerHTML = 'Time Remaining ' + timeLeft;
+    timeLeft--;
+  }
+}
+</script>
+{% endblock body%}
