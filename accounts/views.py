@@ -10,7 +10,7 @@ import random
 def sent(email, otp):
      send_mail(
          'One Time Password',
-         'Please use the verification code below to sign in. \n'+otp+'\nIf you did not request this, you can ignore this email. \n'+'\nThanks,'+'\n Team \n Suvidha & sandeep',
+         'Please use the verification code below to sign in. \n'+otp+'\nIf you did not request this, you can ignore this email. \n'+'\nThanks'
          'foodorder650@gmail.com',
          [email],
          fail_silently=False,
