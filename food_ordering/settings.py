@@ -168,12 +168,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'foodorder650@gmail.com'
-EMAIL_HOST_PASSWORD = 'tynutxmkcumfyhjo'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
 
-SECRET_KEY1 = 'rzp_test_pxJNNIHcr3CxZ6'
-SECRET_KEY ='CopjVOWS9RX0gJBZplC5p6HN'
+SECRET_KEY1 = ''
+SECRET_KEY =''
 
 
 CHANNEL_LAYERS = {
