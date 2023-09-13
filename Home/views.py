@@ -3,6 +3,7 @@ from Restaurant.models import rest_registration, menus
 from datetime import datetime, time,  timedelta
 from django.http import HttpResponseRedirect
 from .models import *
+from orders.models import Orders
 from django.db.models import Sum
 from django.contrib import messages
 import razorpay
@@ -131,9 +132,9 @@ def cart(request):
         return render(request, 'home/cart.html', {'error':'Your Cart is Empty'})
     
     
-    totals = CartItem.objects.filter(cart__user = request.user.id, cart__is_paid = False).aggregate(Sum("food__price"))
-    sum_price = totals["food__price__sum"]
-    
+    totals = CartItem.objects.filter(cart__user = request.user.id, cart__is_paid = False).aggregate(sum =Sum("food__price"))
+    sum_price = totals["sum"]
+
     # user id input the Coupon code 
     if request.method == 'POST':
         Coupon_code = request.POST.get('Coupon_code')
@@ -145,7 +146,6 @@ def cart(request):
         
         # coupon code is alredy exit 
         if cart_obj.coupon:
-          print(cart_obj.coupon.discount)
           messages.error(request,"Coupon already exits")
           return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         
@@ -154,21 +154,21 @@ def cart(request):
         cart_obj.save()
         messages.success(request,"Coupon applied")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
-    
-    # Razorpay payment 
-    client = razorpay.Client(auth=(settings.SECRET_KEY1, settings.SECRET_KEY))
-    data = { "amount": sum_price*100, "currency": "INR", "receipt": "order_rcptid_11" }
-    payment = client.order.create(data=data)
+    price = {}
 
+    if cart_obj.coupon and sum_price >= cart_obj.coupon.min_amount:
+        price['total'] = sum_price - cart_obj.coupon.discount
+
+    else:
+       price['total']  = sum_price
+
+    print(price['total']) 
     
-   # save the user paymet id into order table
-    order = Orders.objects.create(cart = cart_obj, razorpay_order_id = payment['id'])
-  
     context = {
         'cart_items': CartItem.objects.filter(cart__user = request.user.id, cart__is_paid = False),
         'totals': totals,
-         'cart_obj':cart_obj,
-         'payment':payment,
+        'cart_obj':cart_obj,
+        'price':price
     }
     return render(request, 'home/cart.html', context)
 
@@ -178,47 +178,3 @@ def remove_items(request, uid):
   remove = CartItem.objects.filter(uid = uid).delete()
   return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-
-#chek out page
-def chek_out(request):
-     return render(request, 'home/chekout.html')
-
-
-def payment_success(request):
-    
-    """
-    Payment is success the update the order table 
-    to save the more information like the order id, amounts
-    """     
-    order_id = request.GET.get('order_id')
-    amount = request.GET.get('amount')
-    
-    # change the paid False to True in card models
-    cart = Cart.objects.filter(user = request.user.id).update(is_paid = True)
-   
-    obj = Orders.objects.filter(razorpay_order_id = order_id).update(razorpay_payment_id= request.GET.get('payment_id'), total_amounts = amount)
-    response = "<h1>Payment is successfully processed.<a href='/view_orders'>view order</a> to continue...</h1> "
-    return HttpResponse(response)
-
-    
-
-
-# view the orders 
-def view_orders(request):
-    orders = Orders.objects.select_related('cart', 'cart__cartItems__food').filter(
-        cart__is_paid=True, cart__user=request.user.id
-    ).values(
-        'cart__cartItems__food__food_name',
-        'cart__cartItems__food__price',
-        'cart__is_paid',
-        'total_amounts',
-        'razorpay_order_id',
-        'cart__cartItems__food__img',
-        'uid',
-    )
-
-    return render(request, 'home/orders.html',{'orders':orders })
-
-# order tacking
-def Ordertrack(request, uid):
-    return render(request, 'home/OrderTrack.html', {'order_id':uid})

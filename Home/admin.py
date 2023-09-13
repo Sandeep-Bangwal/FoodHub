@@ -13,8 +13,6 @@ class CartAdmin(admin.ModelAdmin):
 @admin.register(CartItem)
 class CartItemAdmin(admin.ModelAdmin):
     list_display = ['cart','food']    
+       
 
-@admin.register(Orders)
-class ordersAdmin(admin.ModelAdmin):
-    list_display = ['cart', 'total_amounts','razorpay_payment_id','razorpay_order_id']    
 

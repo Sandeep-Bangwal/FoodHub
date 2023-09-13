@@ -1,7 +1,7 @@
 from channels.generic.websocket import WebsocketConsumer, AsyncWebsocketConsumer
 from asgiref.sync import async_to_sync
 import json
-from Home.models import *
+from .models import *
 from django.core.serializers.json import DjangoJSONEncoder
 
 class OrderTrackingConsumer(WebsocketConsumer):
